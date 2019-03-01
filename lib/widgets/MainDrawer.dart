@@ -54,12 +54,12 @@ class _MainDrawerState extends State<MainDrawer> {
             accountName: Text("小仙女"),
             accountEmail: Text("晓艳说，爱你哟"),
             currentAccountPicture: CircleAvatar(
-              backgroundImage: AssetImage(Global.bannerImg1),
+              backgroundImage: AssetImage(Global.bannerImg3),
             ),
             decoration: BoxDecoration(
               // color: Theme.of(context).primaryColor,
               image: DecorationImage(
-                  image: AssetImage(Global.bannerImg1),
+                  image: AssetImage(Global.bannerImg3),
                   fit: BoxFit.cover,
                   colorFilter: ColorFilter.mode(
                       Theme.of(context).primaryColor.withOpacity(0.8),

@@ -5,7 +5,6 @@ import 'package:xiaoyanshuo_beta/pages/AddNotes.dart';
 import 'package:xiaoyanshuo_beta/pages/EditNotes.dart';
 import 'package:xiaoyanshuo_beta/utils/HttpManager.dart';
 import "package:pull_to_refresh/pull_to_refresh.dart";
-import 'package:intl/intl.dart';
 import 'package:xiaoyanshuo_beta/widgets/Notdatafound.dart';
 
 class NotesCards extends StatefulWidget {
@@ -17,7 +16,7 @@ class NotesCards extends StatefulWidget {
 class _NotesCardsState extends State<NotesCards> {
   
   DismissDirection _dismissDirection = DismissDirection.endToStart;
-  List<NotesModel> notesList = [];
+  List<NotesModel> _notesList ;
   RefreshController _refreshController;
  
   @override
@@ -44,7 +43,7 @@ class _NotesCardsState extends State<NotesCards> {
       }).toList();
      
       setState(() {
-        notesList = notesData;
+        _notesList = notesData;
       });
     }
   }
@@ -59,18 +58,18 @@ class _NotesCardsState extends State<NotesCards> {
 
   void handleUndo(NotesModel item, int insertionIndex) {
     setState(() {
-      notesList.insert(insertionIndex, item);
+      _notesList.insert(insertionIndex, item);
     });
   }
 
   void _handleDelete(NotesModel item) {
-    final int insertionIndex = notesList.indexOf(item);
+    final int insertionIndex = _notesList.indexOf(item);
     setState(() {
-      notesList.remove(item);
+      _notesList.remove(item);
     });
     showDialog(
         context: context,
-        child: AlertDialog(
+        builder:(BuildContext context)=> AlertDialog(
          content: Text(
            '确定删除以下便签?\n\n${item.updatedAt}\n${item.content}',
            maxLines: 5,
@@ -113,10 +112,10 @@ class _NotesCardsState extends State<NotesCards> {
         builder: (BuildContext context) => EditNotes(notes: item)));
     if (res !=null) {
       //处理页面返回的回调
-      int index=notesList.indexWhere((notes)=>notes.id==item.id);
+      int index=_notesList.indexWhere((notes)=>notes.id==item.id);
       setState(() {
-        notesList[index]=NotesModel.fromJson(res);
-        notesList.sort((b,a)=>a.updatedAt.compareTo(b.updatedAt));
+        _notesList[index]=NotesModel.fromJson(res);
+        _notesList.sort((b,a)=>a.updatedAt.compareTo(b.updatedAt));
       });
     }
   }
@@ -127,7 +126,7 @@ class _NotesCardsState extends State<NotesCards> {
     if (res !=null) {
       //处理页面返回的回调
       setState(() {
-        notesList.insert(0, NotesModel.fromJson(res));
+        _notesList.insert(0, NotesModel.fromJson(res));
       });
     }
   }
@@ -137,11 +136,11 @@ class _NotesCardsState extends State<NotesCards> {
   @override
   Widget build(BuildContext context) {
     Widget body;
-    if (notesList==null) {
+    if (_notesList==null) {
       body = Center(
         child: CircularProgressIndicator(),
       );
-    }else if (notesList.isEmpty) {
+    }else if (_notesList.isEmpty) {
       body = Notdatafound();
     } else {
       body = Container(
@@ -152,7 +151,7 @@ class _NotesCardsState extends State<NotesCards> {
           controller: _refreshController,
           onRefresh: (bool up) => _handleRefresh(up),
           child: ListView(
-            children: notesList.map<Widget>((NotesModel item) {
+            children: _notesList.map<Widget>((NotesModel item) {
               return _LeaveBehindListItem(
                   dismissDirection: _dismissDirection,
                   item: item,

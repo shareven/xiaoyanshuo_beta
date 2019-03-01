@@ -23,9 +23,7 @@ class DatumLegendWithMeasures extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     final simpleCurrencyFormatter =
-        new charts.BasicNumericTickFormatterSpec.fromNumberFormat(
-            new NumberFormat.compactSimpleCurrency(name:"CNY" ));
+    
     return new charts.PieChart(
       seriesList,
       animate: animate,

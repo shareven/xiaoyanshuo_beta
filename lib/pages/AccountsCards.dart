@@ -13,7 +13,7 @@ class AccountsCards extends StatefulWidget {
 
 class _AccountsCardsState extends State<AccountsCards> {
   DismissDirection _dismissDirection = DismissDirection.endToStart;
-  List<AccountsModel> accountsList = [];
+  List<AccountsModel> _accountsList ;
   RefreshController _refreshController;
   int _countAccounts;
   int _skipNum = 0;
@@ -53,9 +53,9 @@ class _AccountsCardsState extends State<AccountsCards> {
       List<AccountsModel> accountsData = resList.map((v) {
         return new AccountsModel.fromJson(v);
       }).toList();
-      List<AccountsModel> newList=accountsList+accountsData;
+      List<AccountsModel> newList=_accountsList+accountsData;
       setState(() {
-        accountsList = newList;
+        _accountsList = newList;
       });
     }
   }
@@ -82,14 +82,14 @@ class _AccountsCardsState extends State<AccountsCards> {
 
   void handleUndo(AccountsModel item, int insertionIndex) {
     setState(() {
-      accountsList.insert(insertionIndex, item);
+      _accountsList.insert(insertionIndex, item);
     });
   }
 
   void _handleDelete(AccountsModel item) {
-    final int insertionIndex = accountsList.indexOf(item);
+    final int insertionIndex = _accountsList.indexOf(item);
     setState(() {
-      accountsList.remove(item);
+      _accountsList.remove(item);
     });
     showDialog(
         context: context,
@@ -140,11 +140,11 @@ class _AccountsCardsState extends State<AccountsCards> {
   @override
   Widget build(BuildContext context) {
     Widget body;
-    if (accountsList==null) {
+    if (_accountsList==null) {
       body = Center(
         child: CircularProgressIndicator(),
       );
-    }else if (accountsList.isEmpty) {
+    }else if (_accountsList.isEmpty) {
       body = Notdatafound();
     } else {
       body = Container(
@@ -155,7 +155,7 @@ class _AccountsCardsState extends State<AccountsCards> {
           controller: _refreshController,
           onRefresh: (bool up) => _handleRefresh(up),
           child: ListView(
-            children: accountsList.map<Widget>((AccountsModel item) {
+            children: _accountsList.map<Widget>((AccountsModel item) {
               return _LeaveBehindListItem(
                   dismissDirection: _dismissDirection,
                   item: item,
