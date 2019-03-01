@@ -53,6 +53,7 @@ class _AccountsCardsState extends State<AccountsCards> {
       List<AccountsModel> accountsData = resList.map((v) {
         return new AccountsModel.fromJson(v);
       }).toList();
+      _accountsList=_accountsList??[];
       List<AccountsModel> newList=_accountsList+accountsData;
       setState(() {
         _accountsList = newList;
