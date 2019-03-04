@@ -90,6 +90,16 @@ class _MainDrawerState extends State<MainDrawer> {
                         ),
                         ListTile(
                           leading: Icon(
+                            Icons.developer_mode,
+                            color: Colors.lightBlue,
+                          ),
+                          title: Text("demo"),   
+                          onTap: () {
+                            NavigatorUtil.pushNamed(context,"/demo");
+                          },
+                        ),
+                        ListTile(
+                          leading: Icon(
                             Icons.pie_chart,
                             color: Colors.teal,
                           ),

@@ -3,6 +3,7 @@ import 'package:xiaoyanshuo_beta/config/Global.dart';
 import 'package:xiaoyanshuo_beta/pages/Accounts.dart';
 import 'package:xiaoyanshuo_beta/pages/Home.dart';
 import 'package:xiaoyanshuo_beta/pages/Notes.dart';
+import 'package:xiaoyanshuo_beta/pages/demo.dart';
 import 'package:xiaoyanshuo_beta/widgets/animation/animateHome.dart';
 
 void main() => runApp(MyApp());
@@ -18,12 +19,13 @@ class MyApp extends StatelessWidget {
       ),
       // initialRoute: "/ ",
       routes: {
+        '/demo':(BuildContext context)=>HomeDemo(),
         '/animation':(BuildContext context)=>AnimationDemoHome(),
         '/home':(BuildContext context)=>Home(),
         '/accounts':(BuildContext context)=>Accounts(),
         '/notes':(BuildContext context)=>Notes(),
       },
-      home: Accounts(),
+      home: HomeDemo(),
     );
   }
 }
